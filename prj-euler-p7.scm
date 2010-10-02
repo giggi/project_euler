@@ -32,5 +32,9 @@
         last-prime))
   (loop 1 -1 0 n))
 
-;gosh> (problem-7 10001)
-;20001
+;gosh> (time (problem-7 10001))
+;;(time (problem-7 10001))
+;; real 197.119
+;; user 189.448
+;; sys    5.163
+;104743

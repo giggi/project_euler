@@ -6,13 +6,13 @@
 ;===============================================================
 
 
-(define (is-prime n)
+(define (is-prime? n)
   (define (is-prime-loop n counter)
     (let ((ret #t))
       (if (< counter n)
           (if (= (modulo n counter) 0)
               (set! ret #f)
-              (is-prime-loop n (+ counter 1))))
+              (set! ret (is-prime-loop n (+ counter 1)))))
       ret))
   (if (< n 2)
       #f
@@ -22,7 +22,7 @@
   (define (loop i last-prime prime-counter threshold)
     (if (< prime-counter threshold)
         (begin
-          (if (is-prime i)
+          (if (is-prime? i)
               (begin
                 (set! prime-counter (+ prime-counter 1))
                 (set! last-prime    i)))

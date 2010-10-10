@@ -49,9 +49,11 @@
         (map (lambda (x)
                (let ((xi (ascii->integer x)))
                  ;(print "x: " x ", base: " base "[counter:" counter "]\n")
-                 (inc! counter)
-                 (cond [(> counter 5) (set! counter 1) (set! product 1) xi]
-                       [else          (set! product (* xi product)) product])))
+                 (cond [(> counter 5)
+                        (set! counter 1) (set! product 1) xi]
+                       [else
+                        (inc! counter)
+                        (set! product (* xi product)) product])))
              lis)))
     (define (loop lis counter)
       (let ((product-value (max-element (generate-integral lis))))
@@ -60,3 +62,6 @@
               [else (loop (cdr lis) (+ counter 1))])))
     (loop lis 1)
     max-product-value))
+
+;gosh> (problem-8 "prj-euler-p8-input.txt")
+;40824

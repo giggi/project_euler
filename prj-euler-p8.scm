@@ -23,17 +23,33 @@
 ;71636269561882670428252483600823257530420752963450
 ;===================================================================
 
-(define (read-list-from-file file-name))
-(define (consecutive-digits? lis n))
-(define (max a b) (if (< a b) b a))
+(define (read-list-from-file filename)
+  (define (process)
+    (let ((c (read-char)))
+      (cond [(not (eof-object? c))
+             ;(format #t "~A~%" c)
+             (cons c (process))]
+            [else
+             '()])))
+  (define (main filename)
+    (with-input-from-file filename process))
+  (main filename))
 
-(define (problem-8 file-name)
-  (let ((lis (read-list-from-file file-name))
-        (consecutive-number 5)
-        (max-consecutive-number -1))
-    (define (loop lis)
-      (cond [(eq? lis '()) max-consecutive-number]
-            [(consecutive-digits? lis concecutive-number)
-             (set! max-consecutive-number
-                   (max max-consecutive-number (car lis)))])
-      (loop (cdr lis)))))
+(define (problem-8 filename)
+  (let ((lis (read-list-from-file filename))
+        (consecutive-list '())
+        (counter 1))
+    (fold (lambda (x base)
+            (print "x: " x ", base: " base "[counter:" counter "]\n")
+            ;(print (+ (string->integer x) 1))
+            (if (eq? x base)
+                (inc! counter)
+                (set! counter 1))
+            (if (>= counter 5)
+                (begin
+                  (cons consecutive-list base)
+                  (set! counter 1)))
+            x)
+          (car lis)
+          (cdr lis))
+    consecutive-list))
